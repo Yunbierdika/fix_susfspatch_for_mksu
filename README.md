@@ -17,25 +17,29 @@ cd fix_susfspatch_for_mksu  #进入本仓库目录
 ```bash
 # 复制补丁文件到MKSU目录
 cp core_hook.patch ../KernelSU/
+cp ksud.patch ../KernelSU/
+cp sucompat.patch ../KernelSU/
 ```
 
 ```bash
 #进入MKSU目录
 cd KernelSU
 #应用补丁
-git apply core_hook.patch
+patch -p1 < core_hook.patch
+patch -p1 < ksud.patch
+patch -p1 < sucompat.patch
 ```
 
-以上步骤**无报错**完成后进入 KernelSU 目录
+以上步骤完成后进入 KernelSU 目录
 
 ```bash
 cd KernelSU
 ```
 
-还原 MKSU 对 devpts hook 的删除（authored by liqideqq）
+还原 SUSFS 对 devpts 的修改
 
 ```bash
-git revert -m 1 $(git log --grep="remove devpts hook" --pretty=format:"%h") -n
+git resotre common/fs/devpts/inode.c
 ```
 
 完成。
