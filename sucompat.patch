@@ -1,24 +1,21 @@
 diff --git a/kernel/sucompat.c b/kernel/sucompat.c
-index 6f48d06..35e4322 100644
+index 9b44af2..443e390 100644
 --- a/kernel/sucompat.c
 +++ b/kernel/sucompat.c
-@@ -270,22 +270,21 @@ void ksu_sucompat_exit()
- }
- 
- #ifdef CONFIG_KSU_SUSFS_SUS_SU
--extern bool ksu_devpts_hook;
+@@ -307,18 +307,20 @@ void ksu_sucompat_exit()
+ extern bool ksu_devpts_hook;
  
  void ksu_susfs_disable_sus_su(void) {
 -	enable_kprobe(&execve_kp);
 -	enable_kprobe(&newfstatat_kp);
 -	enable_kprobe(&faccessat_kp);
 -	enable_kprobe(&pts_unix98_lookup_kp);
--	ksu_devpts_hook = false;
 +	for (int i = 0; i < ARRAY_SIZE(su_kps); i++) {
 +		if (su_kps[i]) {
-+				disable_kprobe(su_kps[i]);
++			enable_kprobe(&su_kps[i]);
 +		}
 +	}
+ 	ksu_devpts_hook = false;
  }
  
  void ksu_susfs_enable_sus_su(void) {
@@ -26,12 +23,11 @@ index 6f48d06..35e4322 100644
 -	disable_kprobe(&newfstatat_kp);
 -	disable_kprobe(&faccessat_kp);
 -	disable_kprobe(&pts_unix98_lookup_kp);
--	ksu_devpts_hook = true;
 +	for (int i = 0; i < ARRAY_SIZE(su_kps); i++) {
 +		if (su_kps[i]) {
-+				enable_kprobe(su_kps[i]);
++			disable_kprobe(&su_kps[i]);
 +		}
 +	}
+ 	ksu_devpts_hook = true;
  }
  #endif // #ifdef CONFIG_KSU_SUSFS_SUS_SU
- 
