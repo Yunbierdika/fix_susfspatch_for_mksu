@@ -16,7 +16,7 @@ index 6f48d06..35e4322 100644
 -	ksu_devpts_hook = false;
 +	for (int i = 0; i < ARRAY_SIZE(su_kps); i++) {
 +		if (su_kps[i]) {
-+				enable_kprobe(su_kps[i]);
++			enable_kprobe(su_kps[i]);
 +		}
 +	}
  }
@@ -29,7 +29,7 @@ index 6f48d06..35e4322 100644
 -	ksu_devpts_hook = true;
 +	for (int i = 0; i < ARRAY_SIZE(su_kps); i++) {
 +		if (su_kps[i]) {
-+				disable_kprobe(su_kps[i]);
++			disable_kprobe(su_kps[i]);
 +		}
 +	}
  }
