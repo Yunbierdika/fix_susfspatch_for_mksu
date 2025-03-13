@@ -12,7 +12,11 @@ index 9b44af2..443e390 100644
 -	enable_kprobe(&pts_unix98_lookup_kp);
 +	for (int i = 0; i < ARRAY_SIZE(su_kps); i++) {
 +		if (su_kps[i]) {
-+			enable_kprobe(&su_kps[i]);
+<<<<<<< HEAD
++			enable_kprobe(su_kps[i]);
+=======
++			enable_kprobe(su_kps[i]);
+>>>>>>> 6cc9fe6b0d317da474ca8b49d0a48a68bf4ad077
 +		}
 +	}
  	ksu_devpts_hook = false;
@@ -25,7 +29,11 @@ index 9b44af2..443e390 100644
 -	disable_kprobe(&pts_unix98_lookup_kp);
 +	for (int i = 0; i < ARRAY_SIZE(su_kps); i++) {
 +		if (su_kps[i]) {
-+			disable_kprobe(&su_kps[i]);
+<<<<<<< HEAD
++			disable_kprobe(su_kps[i]);
+=======
++			disable_kprobe(su_kps[i]);
+>>>>>>> 6cc9fe6b0d317da474ca8b49d0a48a68bf4ad077
 +		}
 +	}
  	ksu_devpts_hook = true;
