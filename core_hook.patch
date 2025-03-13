@@ -104,7 +104,7 @@ index af3225cd..2f0993e1 100644
  	if (!is_zygote_child) {
  		pr_info("handle umount ignore non zygote child: %d\n",
  			current->pid);
-@@ -997,16 +1067,22 @@ out_ksu_try_umount:
+@@ -997,16 +1067,21 @@ out_ksu_try_umount:
  		current->pid);
  #endif
  
@@ -128,7 +128,6 @@ index af3225cd..2f0993e1 100644
  	// try umount ksu temp path
 -	try_umount("/debug_ramdisk", false, MNT_DETACH);
 +	ksu_try_umount("/debug_ramdisk", false, MNT_DETACH);
-+	ksu_try_umount("/sbin", false, MNT_DETACH);
 +#endif
  
  	return 0;
